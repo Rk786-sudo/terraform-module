@@ -1,0 +1,36 @@
+aws_region          = "us-east-1"
+# aws_profile       = "your-local-profile" # Optional; omit to use the standard credential chain.
+cluster_name        = "eks-platform"
+kubernetes_version  = "1.34" # Replace with an EKS version currently supported in your chosen region.
+vpc_cidr            = "10.20.0.0/16"
+availability_zones  = ["us-east-1a", "us-east-1b"]
+public_subnet_cidrs = ["10.20.0.0/20", "10.20.16.0/20"]
+private_subnet_cidrs = ["10.20.32.0/20", "10.20.48.0/20"]
+
+# Required input. Choose an instance family and size appropriate for your workloads.
+# worker_instance_type = "REPLACE_WITH_YOUR_INSTANCE_TYPE"
+
+desired_worker_count = 2
+minimum_worker_count = 1
+maximum_worker_count = 4
+worker_disk_size     = 50
+node_group_name      = "private-workers"
+worker_ami_type      = "AL2023_x86_64_STANDARD"
+
+# API is private by default. For public or combined access, set a tightly scoped CIDR list.
+eks_endpoint_access = "private"
+# eks_public_access_cidrs = ["203.0.113.10/32"]
+
+# SSH is off unless both a key pair and trusted CIDRs are provided. Prefer SSM Session Manager.
+# ssh_key_pair_name = "your-existing-key-pair"
+# ssh_trusted_cidrs = ["203.0.113.10/32"]
+
+nat_gateway_enabled = true
+single_nat_gateway  = true
+enable_ebs_csi_driver = true
+
+resource_tags = {
+  ManagedBy   = "Terraform"
+  Environment = "development"
+  Project     = "eks-platform"
+}

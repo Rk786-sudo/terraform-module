@@ -1,0 +1,3 @@
+bucket = "replace-with-your-existing-state-bucket"
+key    = "eks-terraform/staging/terraform.tfstate"
+region = "us-east-1"

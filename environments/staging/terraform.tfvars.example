@@ -1,0 +1,28 @@
+aws_region          = "us-east-1"
+cluster_name        = "eks-staging"
+kubernetes_version  = "1.34" # Confirm current regional EKS support before use.
+vpc_cidr            = "10.50.0.0/16"
+availability_zones  = ["us-east-1a", "us-east-1b"]
+public_subnet_cidrs = ["10.50.0.0/20", "10.50.16.0/20"]
+private_subnet_cidrs = ["10.50.32.0/20", "10.50.48.0/20"]
+
+# Replace before planning or deployment.
+worker_instance_type = "REPLACE_WITH_YOUR_INSTANCE_TYPE"
+
+desired_worker_count = 2
+minimum_worker_count = 2
+maximum_worker_count = 4
+worker_disk_size     = 50
+node_group_name      = "staging-workers"
+worker_ami_type      = "AL2023_x86_64_STANDARD"
+
+eks_endpoint_access = "private"
+nat_gateway_enabled = true
+single_nat_gateway  = false
+enable_ebs_csi_driver = true
+
+resource_tags = {
+  ManagedBy   = "Terraform"
+  Environment = "staging"
+  Project     = "eks-platform"
+}

@@ -1,0 +1,44 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-platform
+  region: us-east-1
+  version: "1.34" # Replace with an EKS version currently supported in this region.
+
+# Alternative to Terraform's EKS cluster and node-group modules, not an additional deployment.
+# Fill in the IDs of an already-created VPC and subnets. Never create this cluster and the
+# Terraform-managed cluster with the same name/network at the same time.
+vpc:
+  id: "vpc-REPLACE_WITH_EXISTING_VPC_ID"
+  subnets:
+    public:
+      us-east-1a:
+        id: "subnet-REPLACE_WITH_PUBLIC_SUBNET_A"
+      us-east-1b:
+        id: "subnet-REPLACE_WITH_PUBLIC_SUBNET_B"
+    private:
+      us-east-1a:
+        id: "subnet-REPLACE_WITH_PRIVATE_SUBNET_A"
+      us-east-1b:
+        id: "subnet-REPLACE_WITH_PRIVATE_SUBNET_B"
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: false
+
+managedNodeGroups:
+  - name: private-workers
+    instanceType: "REPLACE_WITH_YOUR_INSTANCE_TYPE"
+    privateNetworking: true
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 4
+    volumeSize: 50
+    ssh:
+      allow: false
+
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
+  - name: eks-pod-identity-agent
+  - name: aws-ebs-csi-driver
