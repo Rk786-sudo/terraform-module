@@ -1,4 +1,6 @@
-# Modular EKS on a new VPC
+# terraform-module
+
+## Modular EKS on a new VPC
 
 This project describes a multi-AZ VPC and an AWS-managed Amazon EKS control plane with a private managed node group. It does not create a self-managed EC2 control-plane instance. The default worker count is two and worker nodes are placed only in private subnets.
 
